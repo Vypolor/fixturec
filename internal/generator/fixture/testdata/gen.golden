@@ -1,0 +1,41 @@
+package gen
+
+import (
+	"context"
+	"testing"
+
+	mypackage1_mock "github.com/Vypolor/without_external/mypackage1/mock"
+	mypackage2_mock "github.com/Vypolor/without_external/mypackage2/mock"
+	ctrl_mock "go.uber.org/mock/gomock"
+)
+
+type fixture struct {
+	ctrl *ctrl_mock.Controller
+	ctx  context.Context
+
+	myType1 *mypackage1_mock.MockMyType1
+	myType2 *mypackage2_mock.MockMyType2
+
+	toGen *ToGen
+}
+
+func setUp(t *testing.T) *fixture {
+	f := &fixture{
+		ctrl: ctrl_mock.NewController(t),
+		ctx:  context.Background(),
+
+		myType1: mypackage1_mock.NewMockMyType1(ctrl_mock.NewController(t)),
+		myType2: mypackage2_mock.NewMockMyType2(ctrl_mock.NewController(t)),
+	}
+
+	f.toGen = &ToGen{
+		myType1: f.myType1,
+		myType2: f.myType2,
+	}
+
+	return f
+}
+
+func (f *fixture) tearDown() {
+	f.ctrl.Finish()
+}
