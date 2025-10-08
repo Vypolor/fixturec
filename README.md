@@ -9,10 +9,11 @@ go install github.com/Vypolor/fixturec@latest
 
 🧠 How It Works
 
-In the Go file containing your struct, add a go:generate directive:
+Use following commands for generate fixture:
 
 ```
-// go:generate fixturec -t Impl
+cd path/to/struct/package
+fixturec -t Impl
 ```
 
 
