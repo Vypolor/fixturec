@@ -58,7 +58,10 @@ func GenerateMocks(pkgDir string, fields []dto.FieldInfo) error {
 			}
 			dirLine := fmt.Sprintf("//go:generate mockgen -destination=mock/mock_gen.go -package=mock -source=./%s\n",
 				filepath.Base(filename))
-			_ = os.WriteFile(filename, append([]byte(dirLine), b...), utils.FilePerm0644)
+
+			if err = os.WriteFile(filename, append([]byte(dirLine), b...), utils.FilePerm0644); err != nil {
+				return fmt.Errorf("failed to write file %s: %w", filename, err)
+			}
 			fmt.Printf("Inserted mockgen directive into %s\n", filename)
 		}
 
