@@ -35,11 +35,11 @@ func setUp(t *testing.T) *fixture {
 	f := &fixture{
 		ctrl: ctrl_mock.NewController(t),
 		ctx:  context.Background(),
+	}
 
 {{ range .Fields }}
-		{{ .FieldName }}: {{ mockAlias .PkgPath }}.New{{ typeShort .TypeName }}(ctrl_mock.NewController(t)),
+		f.{{ .FieldName }} = {{ mockAlias .PkgPath }}.New{{ typeShort .TypeName }}(f.ctrl)
 {{- end }}
-	}
 
 	f.{{ .ImplAlias }} = &{{ .StructName }}{
 {{- range .Fields }}

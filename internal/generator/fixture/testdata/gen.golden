@@ -23,10 +23,10 @@ func setUp(t *testing.T) *fixture {
 	f := &fixture{
 		ctrl: ctrl_mock.NewController(t),
 		ctx:  context.Background(),
-
-		myType1: mypackage1_mock.NewMockMyType1(ctrl_mock.NewController(t)),
-		myType2: mypackage2_mock.NewMockMyType2(ctrl_mock.NewController(t)),
 	}
+
+	f.myType1 = mypackage1_mock.NewMockMyType1(f.ctrl)
+	f.myType2 = mypackage2_mock.NewMockMyType2(f.ctrl)
 
 	f.toGen = &ToGen{
 		myType1: f.myType1,
